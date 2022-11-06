@@ -24,9 +24,28 @@ Dynamodb Local
 - Start Spring Boot application by running the main method in `LibraryManagementApplication` class
 - Use Postman collections to test APIs
 
+#### Test APIs
+Run this command to run multiple curls in parallel
+```
+curl http://localhost:8080/books & \
+curl http://localhost:8080/books & \
+curl http://localhost:8080/books & \
+curl http://localhost:8080/books & \
+curl http://localhost:8080/books & \
+curl http://localhost:8080/books & \
+curl http://localhost:8080/books & \
+curl http://localhost:8080/books & \
+curl http://localhost:8080/books
+```
+
 references
 - https://github1s.com/anicetkeric/spring-boot-aws-dynamodb/blob/main/src/main/java/com/sample/microservice/awsdynamodb/domain/Employee.java
 
+https://boottechnologies-ci.medium.com/spring-boot-api-crud-with-aws-dynamodb-377e4d5d5a76
+
+spring-data-dynamodb
+https://github.com/derjust/spring-data-dynamodb
+https://github.com/derjust/spring-data-dynamodb-examples/blob/master/src/main/java/com/github/derjust/spring_data_dynamodb_examples/simple/User.java
 
 list of topics
 - twitter
@@ -34,9 +53,6 @@ list of topics
 
 
 TODOs
-- create dto
-  - controller converts dto to model
-  - mapper that handles conversion
 - create async service
   - check dynamodb supports async
 - add field validation
@@ -50,3 +66,9 @@ TODOs
   - author/user
   - publisher
   - utilize single dynamodb table
+- add unit tests
+- organize readme
+
+for i in {1..100}; do curl http://localhost:8080/books; done
+
+

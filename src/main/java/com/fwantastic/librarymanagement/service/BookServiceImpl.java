@@ -4,6 +4,7 @@ import com.fwantastic.librarymanagement.dao.BookDao;
 import com.fwantastic.librarymanagement.model.Book;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,34 +19,34 @@ public class BookServiceImpl implements BookService {
   private final BookDao bookDao;
 
   @Override
-  public Book create(final Book book) {
+  public CompletableFuture<Book> create(final Book book) {
     logger.info("Create a book [{}]", book);
-    return bookDao.save(book.updateLastModificationDate());
+    return CompletableFuture.completedFuture(bookDao.save(book.updateLastModificationDate()));
   }
 
   @Override
-  public Book update(final Book book) {
+  public CompletableFuture<Book> update(final Book book) {
     logger.info("Update a book [{}]", book);
-    return bookDao.save(book.updateLastModificationDate());
+    return CompletableFuture.completedFuture(bookDao.save(book.updateLastModificationDate()));
   }
 
   @Override
-  public Optional<Book> findById(final String id) {
+  public CompletableFuture<Optional<Book>> findById(final String id) {
     logger.info("Find a book with id=[{}]", id);
-    return bookDao.findById(id);
+    return CompletableFuture.completedFuture(bookDao.findById(id));
   }
 
   /**
    * spring-data-dynamodb does not support case sensitive search
    */
   @Override
-  public List<Book> findByTitle(final String title) {
-    return bookDao.findByTitle(title);
+  public CompletableFuture<List<Book>> findByTitle(final String title) {
+    return CompletableFuture.completedFuture(bookDao.findByTitle(title));
   }
 
   @Override
-  public List<Book> findAll() {
+  public CompletableFuture<List<Book>> findAll() {
     logger.info("find all books");
-    return (List<Book>) bookDao.findAll();
+    return CompletableFuture.completedFuture((List<Book>) bookDao.findAll());
   }
 }

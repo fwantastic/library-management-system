@@ -3,16 +3,17 @@ package com.fwantastic.librarymanagement.service;
 import com.fwantastic.librarymanagement.model.Book;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public interface BookService {
 
-  Book create(Book book);
+  CompletableFuture<Book> create(Book book);
 
-  Book update(Book book);
+  CompletableFuture<Book> update(Book book);
 
-  Optional<Book> findById(String id);
+  CompletableFuture<Optional<Book>> findById(String id);
 
-  List<Book> findByTitle(String title);
+  CompletableFuture<List<Book>> findByTitle(String title);
 
-  List<Book> findAll();
+  CompletableFuture<List<Book>> findAll();
 }
