@@ -1,8 +1,11 @@
 package com.fwantastic.librarymanagement.controller;
 
+import com.fwantastic.librarymanagement.dto.BookDto;
 import com.fwantastic.librarymanagement.model.Book;
+import com.fwantastic.librarymanagement.model.mapper.BookMapper;
 import com.fwantastic.librarymanagement.service.BookService;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,26 +25,31 @@ public class BookController {
   private final BookService bookService;
 
   @PostMapping
-  public Book create(final @RequestBody Book book) {
-    return bookService.create(book);
+  public BookDto create(final @RequestBody Book book) {
+    final var bookCreated = bookService.create(book);
+    return BookMapper.toBookDto(bookCreated);
   }
 
   @PutMapping("/{id}")
-  public Book update(final @RequestBody Book book) {
-    return bookService.update(book);
+  public BookDto update(final @RequestBody Book book) {
+    final var bookUpdated = bookService.update(book);
+    return BookMapper.toBookDto(bookUpdated);
   }
 
   @GetMapping("/{id}")
-  public Book findById(final @PathVariable(value = "id") String id) {
+  public BookDto findById(final @PathVariable(value = "id") String id) {
     return bookService.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("book not found"));
+        .map(BookMapper::toBookDto)
+        .orElseThrow(
+            () -> new IllegalArgumentException(String.format("Book ID=[%s] not found", id)));
   }
 
   @GetMapping
-  public List<Book> findAll(final @RequestParam(required = false) String title) {
+  public List<BookDto> findAll(final @RequestParam(required = false) String title) {
     if (!StringUtils.isEmpty(title)) {
-      return bookService.findByTitle(title);
+      return bookService.findByTitle(title).stream().map(BookMapper::toBookDto)
+          .collect(Collectors.toList());
     }
-    return bookService.findAll();
+    return bookService.findAll().stream().map(BookMapper::toBookDto).collect(Collectors.toList());
   }
 }

@@ -1,4 +1,4 @@
-package com.fwantastic.librarymanagement.config;
+package com.fwantastic.librarymanagement.model.converter;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter;
 import java.time.Instant;
