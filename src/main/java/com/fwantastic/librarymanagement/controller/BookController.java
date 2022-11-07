@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,13 +69,17 @@ public class BookController {
 
   @GetMapping
   public CompletableFuture<List<BookDto>> findAll(
-      final @RequestParam(required = false) String title) {
+      final @RequestParam(required = false) String title,
+      final @RequestParam(defaultValue = "0") int page,
+      final @RequestParam(defaultValue = "3") int size) {
     logger.info("Received find books request");
+    final var pageRequest = PageRequest.of(page, size);
+
     if (!StringUtils.isEmpty(title)) {
-      return bookService.findByTitle(title).thenApply(
+      return bookService.findByTitle(title, pageRequest).thenApply(
           books -> books.stream().map(BookMapper::toBookDto).collect(Collectors.toList()));
     }
-    return bookService.findAll()
+    return bookService.findAll(pageRequest)
         .thenApply(books -> books.stream().map(BookMapper::toBookDto).collect(Collectors.toList()));
 
   }

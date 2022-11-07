@@ -56,7 +56,6 @@ list of topics
 
 
 TODOs
-- add support for pagination
 - use cache
   - check if in memory cache is worth
 - add more features for other entities

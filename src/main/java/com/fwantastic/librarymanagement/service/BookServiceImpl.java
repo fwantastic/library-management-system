@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -63,15 +64,15 @@ public class BookServiceImpl implements BookService {
    */
   @Async
   @Override
-  public CompletableFuture<List<Book>> findByTitle(final String title) {
-    return CompletableFuture.completedFuture(bookDao.findByTitle(title));
+  public CompletableFuture<List<Book>> findByTitle(final String title, final Pageable pageable) {
+    return CompletableFuture.completedFuture(bookDao.findByTitle(title, pageable).getContent());
   }
 
   @Async
   @Override
-  public CompletableFuture<List<Book>> findAll() {
-    logger.info("find all books");
-    return CompletableFuture.completedFuture((List<Book>) bookDao.findAll());
+  public CompletableFuture<List<Book>> findAll(final Pageable pageable) {
+    logger.info("Find all books");
+    return CompletableFuture.completedFuture(bookDao.findAll(pageable).getContent());
   }
 
   public boolean validate(final Book book) {
