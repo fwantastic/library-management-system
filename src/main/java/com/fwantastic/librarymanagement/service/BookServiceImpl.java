@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,7 @@ public class BookServiceImpl implements BookService {
   }
 
   @Async
+  @Cacheable(value = "books", key = "{ #root.methodName, #id }")
   @Override
   public CompletableFuture<Optional<Book>> findById(final String id) {
     logger.info("Find a book with id=[{}]", id);
@@ -63,12 +65,15 @@ public class BookServiceImpl implements BookService {
    * spring-data-dynamodb does not support case sensitive search
    */
   @Async
+  @Cacheable(value = "books", key = "{ #root.methodName, #title, #pageable }")
   @Override
   public CompletableFuture<List<Book>> findByTitle(final String title, final Pageable pageable) {
+    logger.info("Find books by title");
     return CompletableFuture.completedFuture(bookDao.findByTitle(title, pageable).getContent());
   }
 
   @Async
+  @Cacheable(value = "books", key = "{ #root.methodName, #pageable }")
   @Override
   public CompletableFuture<List<Book>> findAll(final Pageable pageable) {
     logger.info("Find all books");
