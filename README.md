@@ -19,6 +19,9 @@ Docker
 Dynamodb Local
 - Download [Dynamodb Local](https://hub.docker.com/r/amazon/dynamodb-local/) image
 
+Postman
+- Download [Postman](https://www.postman.com/downloads/?utm_source=postman-home)
+
 ### How to run
 - Start Dynamodb Local docker image with Host Port `8000`
 - Start Spring Boot application by running the main method in `LibraryManagementApplication` class
@@ -59,6 +62,7 @@ TODOs
   - title less than 100 chars
   - rating in between 1-5
   - author is not null
+- error handling
 - add support for pagination
 - use cache
   - check if in memory cache is worth
@@ -67,6 +71,7 @@ TODOs
   - publisher
   - utilize single dynamodb table
 - add unit tests
+- add postman collection
 - organize readme
 
 for i in {1..100}; do curl http://localhost:8080/books; done

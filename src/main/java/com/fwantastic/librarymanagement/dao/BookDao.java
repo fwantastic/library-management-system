@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @EnableScan
 @Repository
 public interface BookDao extends PagingAndSortingRepository<Book, String> {
+
   List<Book> findByTitle(String title);
 }

@@ -41,8 +41,4 @@ public class Book {
    */
   @DynamoDBTypeConverted(converter = InstantTypeConverter.class)
   private Instant lastModificationDate;
-
-  public Book updateLastModificationDate() {
-    return this.toBuilder().lastModificationDate(Instant.now()).build();
-  }
 }
