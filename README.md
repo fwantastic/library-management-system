@@ -56,13 +56,6 @@ list of topics
 
 
 TODOs
-- create async service
-  - check dynamodb supports async
-- add field validation
-  - title less than 100 chars
-  - rating in between 1-5
-  - author is not null
-- error handling
 - add support for pagination
 - use cache
   - check if in memory cache is worth

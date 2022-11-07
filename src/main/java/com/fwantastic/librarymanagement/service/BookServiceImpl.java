@@ -1,6 +1,7 @@
 package com.fwantastic.librarymanagement.service;
 
 import com.fwantastic.librarymanagement.dao.BookDao;
+import com.fwantastic.librarymanagement.exception.BadBookException;
 import com.fwantastic.librarymanagement.format.BookFormatter;
 import com.fwantastic.librarymanagement.model.Book;
 import com.fwantastic.librarymanagement.validation.BookValidator;
@@ -30,7 +31,7 @@ public class BookServiceImpl implements BookService {
 
     if (!validate(formattedBook)) {
       logger.error("Failed validation for book [{}]", formattedBook);
-      return CompletableFuture.failedFuture(new IllegalArgumentException("Bad book"));
+      return CompletableFuture.failedFuture(new BadBookException("Bad book"));
     }
 
     return CompletableFuture.completedFuture(bookDao.save(formattedBook));
@@ -44,7 +45,7 @@ public class BookServiceImpl implements BookService {
 
     if (!validate(formattedBook)) {
       logger.error("Failed validation for book [{}]", formattedBook);
-      return CompletableFuture.failedFuture(new IllegalArgumentException("Bad book"));
+      return CompletableFuture.failedFuture(new BadBookException("Bad book"));
     }
 
     return CompletableFuture.completedFuture(bookDao.save(formattedBook));

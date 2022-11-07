@@ -1,6 +1,7 @@
 package com.fwantastic.librarymanagement.controller;
 
 import com.fwantastic.librarymanagement.dto.BookDto;
+import com.fwantastic.librarymanagement.exception.BadBookException;
 import com.fwantastic.librarymanagement.model.mapper.BookMapper;
 import com.fwantastic.librarymanagement.service.BookService;
 import java.util.List;
@@ -31,9 +32,9 @@ public class BookController {
   private final BookService bookService;
 
   /**
-   * When the CompletableFuture is returned, it triggers Servlet 3.0 asynchronous processing
-   * feature which the execution of the CompletableFuture will be executed in other thread such that
-   * the server thread that handle the HTTP request can be free up as quickly as possible to process
+   * When the CompletableFuture is returned, it triggers Servlet 3.0 asynchronous processing feature
+   * which the execution of the CompletableFuture will be executed in other thread such that the
+   * server thread that handle the HTTP request can be free up as quickly as possible to process
    * other HTTP requests.
    * <p>
    * Reference:
@@ -60,7 +61,7 @@ public class BookController {
         .thenApply(book ->
             book.map(BookMapper::toBookDto)
                 .orElseThrow(
-                    () -> new IllegalArgumentException(String.format("Book ID=[%s] not found", id)))
+                    () -> new BadBookException(String.format("Book ID=[%s] not found", id)))
         )
         ;
   }
